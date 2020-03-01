@@ -1,1 +1,1 @@
-# the-great-dumpster
+# The Great Dumpster
