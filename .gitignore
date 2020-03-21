@@ -2,3 +2,6 @@
 
 # files with private information
 api-keys.js
+
+# ignore all the node_modules folders
+node_modules/
