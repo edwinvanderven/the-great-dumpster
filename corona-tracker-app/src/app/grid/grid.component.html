@@ -1,0 +1,13 @@
+<div *ngIf="isError">
+  Error loading...
+</div>
+
+<div *ngIf="isLoading">
+  Loading...
+</div>
+
+<div *ngIf="!isLoading">
+  <div class="mat-app-background basic-container">
+    <app-grid-content [gridData]="gridData"></app-grid-content>
+  </div>
+</div>
