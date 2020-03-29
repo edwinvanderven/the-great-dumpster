@@ -3,33 +3,40 @@
   <ng-container matColumnDef="index">
     <th mat-header-cell *matHeaderCellDef> No. </th>
     <td mat-cell *matCellDef="let entry; let i = index;">{{i + 1}}</td>
+    <td mat-footer-cell *matFooterCellDef></td>
   </ng-container>
 
   <ng-container matColumnDef="country">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
     <td mat-cell *matCellDef="let entry"> {{entry.country}} </td>
+    <td mat-footer-cell *matFooterCellDef> World </td>
   </ng-container>
 
   <ng-container matColumnDef="cases">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Cases </th>
     <td mat-cell *matCellDef="let entry"> {{entry.cases}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{worldStats.cases}} </td>
   </ng-container>
 
   <ng-container matColumnDef="active">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
     <td mat-cell *matCellDef="let entry"> {{entry.active}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{worldStats.active}} </td>
   </ng-container>
 
   <ng-container matColumnDef="recovered">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Recovered </th>
     <td mat-cell *matCellDef="let entry"> {{entry.recovered}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{worldStats.recovered}} </td>
   </ng-container>
 
   <ng-container matColumnDef="deaths">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Deaths </th>
     <td mat-cell *matCellDef="let entry"> {{entry.deaths}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{worldStats.deaths}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+  <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
 </table>

@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class GridContentComponent implements OnInit {
   public columnsToDisplay: string[] = ['index', 'country', 'cases', 'active', 'recovered', 'deaths'];
   public dataSource: MatTableDataSource<Entry>;
+  public worldStats: Entry;
 
   @Input() gridData: Result;
 
@@ -22,6 +23,8 @@ export class GridContentComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.gridData.data);
     this.dataSource.sort = this.sort;
     this.sort.sort({ id: 'cases', start: 'desc', disableClear: false });
+
+    this.worldStats = this.gridData.worldStats;
     console.log('gridData: ', this.gridData);
   }
 }
