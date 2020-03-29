@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Result } from 'src/app/corona.service';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Result, Entry } from 'src/app/corona.service';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-grid-content',
@@ -7,19 +9,19 @@ import { Result } from 'src/app/corona.service';
   styleUrls: ['./grid-content.component.scss']
 })
 export class GridContentComponent implements OnInit {
+  public columnsToDisplay: string[] = ['country', 'cases', 'active', 'recovered', 'deaths'];
+  public dataSource: MatTableDataSource<Entry>;
+
   @Input() gridData: Result;
 
-  public columnsToDisplay = [
-    'country',
-    'cases',
-    'active',
-    'recovered',
-    'deaths'
-  ];
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource(this.gridData.data);
+    this.dataSource.sort = this.sort;
+    this.sort.sort({ id: 'cases', start: 'desc', disableClear: false });
     console.log('gridData: ', this.gridData);
   }
 }
