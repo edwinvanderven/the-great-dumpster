@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./grid-content.component.scss']
 })
 export class GridContentComponent implements OnInit {
-  public columnsToDisplay: string[] = ['country', 'cases', 'active', 'recovered', 'deaths'];
+  public columnsToDisplay: string[] = ['index', 'country', 'cases', 'active', 'recovered', 'deaths'];
   public dataSource: MatTableDataSource<Entry>;
 
   @Input() gridData: Result;
