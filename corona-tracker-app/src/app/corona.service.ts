@@ -8,18 +8,19 @@ export interface Result {
 
 export interface Entry {
   country: string;
-  province: string;
+  countryInfo?: any;
   countryCode: string;
-  confirmed: number;
-  recovered: number;
+  cases: number;
+  todayCases: number;
   deaths: number;
-  confirmedByDay: number[];
-  recoveredByDay: number[];
-  deathsByDay: number[];
-  lastUpdated: string;
+  todayDeaths: number;
+  recovered: number;
   active: number;
-  mortalityPer: string;
-  recoveredPer: string;
+  critical: number;
+  casesPerOneMillion: number;
+  deathsPerOneMillion?: number;
+  updated?: number;
+  confirmed: number;
 }
 
 @Injectable({
