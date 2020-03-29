@@ -29,6 +29,7 @@ export class GridComponent implements OnInit {
   }
 
   private handleError(error: Error) {
+    console.error(error);
     this.isLoading = false;
     this.isError = true;
   }
