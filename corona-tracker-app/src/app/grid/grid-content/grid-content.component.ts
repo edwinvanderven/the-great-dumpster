@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Result, Entry } from 'src/app/corona.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,24 +8,34 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './grid-content.component.html',
   styleUrls: ['./grid-content.component.scss']
 })
-export class GridContentComponent implements OnInit {
+export class GridContentComponent {
   public columnsToDisplay: string[] = ['index', 'country', 'cases', 'todayCases', 'deaths', 'todayDeaths', 'active', 'recovered'];
   public dataSource: MatTableDataSource<Entry>;
   public worldStats: Entry;
 
-  @Input() gridData: Result;
-
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() { }
+  private result: Result;
+  @Input() public set gridData(value: Result) {
+    if (this.result !== value) {
+      this.result = value;
+      this.updateDataSource();
+    }
+  }
 
-  ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.gridData.data);
+  private updateDataSource() {
+    if (this.dataSource) {
+      this.dataSource.data = this.result.data;
+      this.worldStats = this.result.worldStats;
+      // console.log('worldStats.totalCases: ', this.worldStats.cases);
+      return;
+    }
+
+    this.dataSource = new MatTableDataSource(this.result.data);
     this.dataSource.sort = this.sort;
     this.sort.sort({ id: 'cases', start: 'desc', disableClear: false });
-
-    this.worldStats = this.gridData.worldStats;
-    console.log('gridData: ', this.gridData);
+    this.worldStats = this.result.worldStats;
+    // console.log('gridData: ', this.result);
   }
 
   applyFilter(event: Event) {

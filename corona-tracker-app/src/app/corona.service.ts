@@ -27,7 +27,7 @@ export interface Entry {
   providedIn: 'root'
 })
 export class CoronaService {
-  private call = `https://corona-stats.online?source=2&format=json`;
+  private call = `https://corona-stats.online?format=json`;
 
   constructor(private httpClient: HttpClient) {}
 
