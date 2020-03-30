@@ -32,4 +32,12 @@ export class GridContentComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  getTodayCases(entry: Entry): string {
+    return entry.todayCases > 0 ? '+' + entry.todayCases : '';
+  }
+
+  getTodayDeaths(entry: Entry): string {
+    return entry.todayDeaths > 0 ? '+' + entry.todayDeaths : '';
+  }
 }
