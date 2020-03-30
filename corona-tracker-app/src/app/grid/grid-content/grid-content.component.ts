@@ -27,4 +27,9 @@ export class GridContentComponent implements OnInit {
     this.worldStats = this.gridData.worldStats;
     console.log('gridData: ', this.gridData);
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
