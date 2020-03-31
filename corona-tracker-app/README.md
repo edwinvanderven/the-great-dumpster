@@ -1,6 +1,6 @@
 # Corona Tracker
 
-This app shows an Angular Material table with the contents of [https://corona-stats.online](`https://corona-stats.online/`).
+This app shows an Angular Material table with the contents of [https://corona-stats.online](https://corona-stats.online/).
 
 - Special thanks to [sagarkarira](https://github.com/sagarkarira/coronavirus-tracker-cli).
 
