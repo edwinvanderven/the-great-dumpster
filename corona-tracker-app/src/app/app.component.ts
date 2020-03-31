@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Corona Tracker';
+
+  reload() {
+    window.location.reload();
+  }
 }
