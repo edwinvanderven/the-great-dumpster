@@ -16,14 +16,17 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    const intervalTimeout = 10000; // 10 seconds
+    const intervalTimeout = 60000; // 1 minute
 
-    setInterval(() => {
-      this.coronaService.getData().then(
-        (result: Result[]) => this.handleResult(result),
-        (error: Error) => this.handleError(error),
-      );
-    }, intervalTimeout);
+    setInterval(() => this.getData(), intervalTimeout);
+    this.getData(); // initial startup
+  }
+
+  private getData() {
+    this.coronaService.getData().then(
+      (result: Result[]) => this.handleResult(result),
+      (error: Error) => this.handleError(error),
+    );
   }
 
   private handleResult(result: Result[]) {
