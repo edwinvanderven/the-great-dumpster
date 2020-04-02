@@ -17,6 +17,14 @@ tr.mat-footer-row {
   font-weight: 600;
 }
 
-.country-flag {
-  height: 11px;
+.country {
+  display: flex;
+  align-items: center;
+
+  .country-flag {
+    width: 20px;
+  }
+  .country-name {
+    padding-left: 4px;
+  }
 }
