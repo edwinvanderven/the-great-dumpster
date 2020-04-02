@@ -30,7 +30,7 @@ export class GridComponent implements OnInit {
   }
 
   private handleResult(result: Result[]) {
-    this.isLoading = false;
+    this.isError = this.isLoading = false;
     this.gridData = result;
   }
 
