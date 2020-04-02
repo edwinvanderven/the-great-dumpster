@@ -8,7 +8,7 @@ export interface Result {
 
 export interface Entry {
   country: string;
-  countryInfo?: any;
+  countryInfo?: CountryInfo;
   countryCode: string;
   cases: number;
   todayCases: number;
@@ -21,6 +21,15 @@ export interface Entry {
   deathsPerOneMillion?: number;
   updated?: number;
   confirmed: number;
+}
+
+export interface CountryInfo {
+  _id: number; // 840
+  iso2: string; // "US"
+  iso3: string; // "USA"
+  lat: number; // 38
+  long: number; // -97
+  flag: string; // "https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/us.png"
 }
 
 @Injectable({
