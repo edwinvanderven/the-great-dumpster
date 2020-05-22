@@ -1,6 +1,22 @@
 <template>
   <div class="sudoku">
-    <h2>Sudoku</h2>
+    <div class="row">
+      <h2>Sudoku</h2>
+
+      <strong>
+        {{ formattedTime }}
+      </strong>
+
+      <select v-model="difficulity" @change="generatePuzzle()">
+        <option 
+          v-for="(display, level) in levels" :key="level"
+          :value="level"
+        >
+          {{ display }}
+        </option>
+      </select>
+    </div>
+
 
     <div class="grid">
       <div class="row" v-for="(row, rowIndex) in puzzle" :key="rowIndex">
@@ -8,13 +24,28 @@
               :class="{
                 'border-right': colIndex === 2 || colIndex === 5,
                 'border-bottom': rowIndex === 2 || rowIndex === 5,
-                'original': cell.original
+                'original': cell.original,
+                'active': activeRow === rowIndex && activeCol === colIndex,
+                'invalid': cell.value && isCellInvalid(rowIndex, colIndex, cell.value)
               }"
               v-for="(cell, colIndex) in row" :key="colIndex"
+              @click="setCellActive(rowIndex, colIndex, cell.original)"
         >
           {{ cell.value }}
         </div>
       </div>
+    </div>
+
+    <div class="row">
+      <button 
+        type="button" 
+        class="btn" 
+        v-for="value in Array(9).keys()" :key="value"
+        :disabled="activeRow === -1 || activeCol === -1"
+        @click="setCellValue(value + 1)"
+      >
+        {{ value + 1 }}
+      </button>
     </div>
   </div>
 </template>
@@ -28,11 +59,37 @@ export default {
     return {
       puzzle: [],
       difficulity: 'easy',
-
+      activeRow: -1,
+      activeCol: -1,
+      levels: {
+        'easy': 'Easy',
+        'medium': 'Medium',
+        'hard': 'Hard',
+        'very-hard': 'Very Hard',
+        'insane': 'Insane',
+        'inhuman': 'Inhuman'
+      },
+      seconds: 0,
+      timer: null
     }
   },
   mounted () {
     this.generatePuzzle();
+  },
+  computed: {
+    formattedTime () {
+      let min = Math.floor(this.seconds / 60);
+      let sec = this.seconds % 60;
+
+      if (min < 10) {
+        min = `0${min}`;
+      }
+      if (sec < 10) {
+        sec = `0${sec}`;
+      }
+
+      return `${min}:${sec}`;
+    }
   },
   methods: {
     generatePuzzle () {
@@ -47,7 +104,82 @@ export default {
           });
         });
 
-      console.log(this.puzzle);
+      this.seconds = 0;
+      clearInterval(this.timer);
+      this.timer = setInterval(() => {
+        this.seconds += 1;
+      }, 1000);
+    },
+    setCellActive (row, col, original) {
+      if (original) {
+        return;
+      }
+
+      if (this.activeRow === row && this.activeCol === col) {
+        this.activeRow = -1;
+        this.activeCol = -1;
+        return;
+      }
+
+      this.activeRow = row;
+      this.activeCol = col;
+    },
+    setCellValue (value) {
+      this.puzzle[this.activeRow][this.activeCol].value = value;
+      this.activeRow = -1;
+      this.activeCol = -1;
+
+      if (this.isGameComplete()) {
+        const msg = [
+          'Succes',
+          '',
+          `Difficulty: ${this.levels[this.difficulity]}`,
+          `Time: ${this.formattedTime}`
+        ];
+
+        alert(msg.join('\n'));
+        this.generatePuzzle();
+      }
+    },
+    isCellInvalid (row, col, value) {
+      if (!value) {
+        return true;
+      }
+
+      for (let c = 0; c < 9; c++) {
+        if (c !== col && this.puzzle[row][c].value === value) {
+          return true;
+        }
+      }
+
+      for (let r = 0; r < 9; r++) {
+        if (r !== row && this.puzzle[r][col].value === value) {
+          return true;
+        }
+      }
+
+      const rowStart = Math.floor(row / 3) * 3;
+      const colStart = Math.floor(col / 3) * 3;
+      for (let r = rowStart; r < rowStart + 3; r++) {
+        for (let c = colStart; c < colStart + 3; c++) {
+          if (this.puzzle[r][c].value === value && !(r === row && c === col)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    },
+    isGameComplete() {
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          if (this.isCellInvalid(r, c, this.puzzle[r][c].value)) {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
   }
 }
@@ -55,9 +187,15 @@ export default {
 
 <style scoped>
 .sudoku {
-  width: calc(9 * 40px);
+  width: 100%;
+  max-width: 420px;
   margin: 0.5rem auto;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.grid {
+  width: calc(9 * 40px);
+  margin: 0.5rem auto 1rem;
 }
 
 .row {
@@ -92,5 +230,23 @@ export default {
 }
 .cell:not(.original) {
   cursor: pointer;
+}
+.cell.active {
+  background-color: blue;
+  color: #fff;
+}
+.cell.invalid:not(.active) {
+  background-color: red;
+  color: #fff;
+}
+
+.btn {
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+  cursor: pointer;
+}
+.btn:disabled {
+  cursor: not-allowed;
 }
 </style>
