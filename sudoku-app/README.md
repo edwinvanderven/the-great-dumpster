@@ -1,4 +1,8 @@
-# sudoku-app
+# Sudoku app
+
+## Introduction
+
+Inspired by this [Youtube](https://www.youtube.com/watch?v=oWimqARmM7s) video.
 
 ## Project setup
 
