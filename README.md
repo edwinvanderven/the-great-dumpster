@@ -16,7 +16,7 @@ This repository is a junkyard of small projects and general tryouts.
 
 | Angular                                                     |
 | ----------------------------------------------------------- |
-| [Corona Tracker](javascript/angular/corona-tracker-app)     |
+|                                                             |
 
 | Vue                                                         |
 | ----------------------------------------------------------- |
