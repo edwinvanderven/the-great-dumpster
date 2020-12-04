@@ -6,9 +6,6 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
-  componentDidMount() {
-    // this.props.onInitPurchase();
-  }
 
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
@@ -45,11 +42,5 @@ const mapStateToProps = state => {
     purchased: state.order.purchased
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onInitPurchase: () => dispatch(actions.purchaseInit())
-//   };
-// };
 
 export default connect(mapStateToProps)(Checkout);
